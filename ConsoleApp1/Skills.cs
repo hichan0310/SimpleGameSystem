@@ -1,8 +1,11 @@
 ﻿namespace Main;
 
-public class FireBall : RangeSkill
+public class SearingOnslaught : ActiveSkill
 {
-    public FireBall(int level) : base("파이어볼", "공격력에 기반하여 1회 광역 데미지를 주고 화상 효과를 3턴 부여합니다. ", level)
+    public SearingOnslaught(int level) : base(
+        "역날의 화염",
+        "공격력에 기반하여 1회 광역 데미지를 주고 화상 효과를 3턴 부여합니다. ",
+        level)
     {
     }
 
@@ -14,28 +17,43 @@ public class FireBall : RangeSkill
     public override void execute(Charector caster, List<Charector> targets)
     {
         base.execute(caster, targets);
+        foreach (var atkObserver in caster.attackObserver)
+            atkObserver.attack(caster);
         foreach (Charector target in targets)
         {
             target.damage(caster, this.coefficient);
+            foreach (var hitObserver in target.getHitObserver)
+                hitObserver.getHit(caster);
             target.addBuffs(new Burn(3));
         }
     }
 }
 
-public class Javelin : OneTargetSkill
+public class GlacialIllumination : ActiveSkill
 {
-    public Javelin(int level) : base("창 던지기", "창을 던져 공격력에 기반한 물리 피해를 줍니다. ", level)
+    public GlacialIllumination(int level) : base(
+        "파도를 얼리는 광검",
+        "캐릭터에게 빛의 검 상태를 부여한다. 데미지를 줄 때마다 에너지가 쌓이고 5턴 뒤에 폭발하여 캐릭터의 공격력과 스택 수에 기반하여 광역 피해를 입힌다. ",
+        level)
     {
     }
-    
+
     private int coefficient
     {
         get { return 100 + level * 20; }
     }
-    
-    public override void execute(Charector caster, Charector target)
+
+    public override void execute(Charector caster, List<Charector> targets)
     {
-        base.execute(caster, target);
-        target.damage(caster, this.coefficient);
+        base.execute(caster, targets);
+        foreach (var atkObserver in caster.attackObserver)
+            atkObserver.attack(caster);
+        caster.addBuffs(new LightfallSword(5));
+        foreach (Charector target in targets)
+        {
+            target.damage(caster, this.coefficient);
+            foreach (var hitObserver in target.getHitObserver)
+                hitObserver.getHit(caster);
+        }
     }
 }

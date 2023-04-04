@@ -148,6 +148,7 @@ public class Buff
 {
     public string name;
     public string explaination;
+    public bool isDeBuff;
     public Buff(string name, string explaination, int coolTime)
     {
         this.name = name;
@@ -162,6 +163,10 @@ public class Buff
     public virtual void remove(Charector target)
     {
     }
+    
+    public virtual void attack(Charector target){}
+    
+    public virtual void getHit(Charector target){}
 
     public int coolTime;
 

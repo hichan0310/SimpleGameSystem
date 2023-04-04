@@ -23,12 +23,9 @@ public class Skill
 
 
 
-
-
-
-public class RangeSkill : Skill
+public class ActiveSkill : Skill
 {
-    public RangeSkill(string name, string explaination, int level = 0) : base(name, explaination, level)
+    public ActiveSkill(string name, string explaination, int level = 0) : base(name, explaination, level)
     {
     }
 
@@ -40,30 +37,6 @@ public class RangeSkill : Skill
     }
 }
 
-public class OneTargetSkill : Skill
-{
-    public OneTargetSkill(string name, string explaination, int level = 0) : base(name, explaination, level)
-    {
-    }
-
-    public virtual void execute(Charector caster, Charector target) // 여기에는 스킬 사용 여부만 표시
-    {
-        string result = $"{name} : {caster.name} -> ";
-        result += $"{target.name} ";
-    }
-}
-
-
-
-
-
-public class PassiveSkill : Skill
-{
-    public PassiveSkill(string name, string explaination, int level = 0) : base(name, explaination, level)
-    {
-    }
-
-    public virtual void apply(Charector caster)
-    {
-    }
-}
+// 이제 어떤 식으로 돌아갈지 대충 구상 완료
+// 유니티로 넘어가자
+// 게임판, 맵은 좀 더 만들어야 할 듯
